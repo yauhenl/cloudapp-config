@@ -12,13 +12,16 @@ eureka:
     registryFetchIntervalSeconds: 5
 
 zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
   routes:
-    book-service:
-      path: /book-service/**
-      sensitive-headers: Set-Cookie,Authorization
-    rating-service:
-      path: /rating-service/**
-      sensitive-headers: Set-Cookie,
+    auth-service:
+      path: /uaa/**
+      url: http://auth-service:5000
+      stripPrefix: false
+      sensitiveHeaders:
     discovery:
       path: /discovery/**
       sensitive-headers: Set-Cookie,Authorization
@@ -26,18 +29,8 @@ zuul:
 
 hystrix:
   command:
-    book-service:
+    default:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 600000
-    rating-service:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 600000
-    discovery:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 600000
+            timeoutInMilliseconds: 20000
