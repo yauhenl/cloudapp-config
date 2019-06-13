@@ -11,7 +11,8 @@ spring:
   data:
     mongodb:
       database: accountdb
-
+  main:
+    allow-bean-definition-overriding: true
 server:
   servlet:
     context-path: /accounts
